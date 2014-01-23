@@ -1,0 +1,84 @@
+// Author: Chris DiLorenzo
+// Email:  chris@suitey.com
+//
+// LICENSE
+//
+// The MIT License (MIT)
+//
+// Copyright (c) 2014 Suitey
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of
+// this software and associated documentation files (the "Software"), to deal in
+// the Software without restriction, including without limitation the rights to
+// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+// the Software, and to permit persons to whom the Software is furnished to do so,
+// subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+// FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+// COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+// IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+// CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+$_123: #EE352E
+$_456: #00933C
+$ACE: #2850AD
+$NQR: #FCCC0A
+$BDFM: #FF6319
+$S: #808183
+$_7: #B933AD
+$L: #A7A9AC
+$JZ: #996633
+$G: #6CBE45
+
+=circle($color, $fontSize: 16px, $diameter: 24px)
+    color: white
+    width: $diameter
+    font-weight: 400
+    height: $diameter
+    text-align: center
+    border-radius: 50%
+    font-size: $fontSize
+    display: inline-block
+    line-height: $diameter
+    background-color: $color
+    font-family: Helvetica, sans-serif
+
+[class='1'],
+[class='2'],
+[class='3']
+    +circle($_123)
+
+[class='4'],
+[class='5'],
+[class='6']
+    +circle($_456)
+
+[class='7']
+    +circle($_7)
+
+.N, .Q, .R
+    +circle($NQR)
+
+.B, .F, .D, .M
+    +circle($BDFM)
+
+.S
+    +circle($S)
+
+.L
+    +circle($L)
+
+.J, .Z
+    +circle($JZ)
+
+.G
+    +circle($G)
+
+.A, .C, .E
+    +circle($ACE)
