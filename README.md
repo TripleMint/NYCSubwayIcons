@@ -13,5 +13,7 @@ Chris DiLorenzo, Chris Sanders & Ethan Schmertzler
 
 ### License stuff
 Copyright (c) 2015 Suitey
+
 License: The MIT License (MIT)
+
 http://www.opensource.org/licenses/mit-license.php
