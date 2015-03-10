@@ -1,29 +1,37 @@
-// Author: Chris DiLorenzo
-// Email:  chris@suitey.com
+// url: https://suitey.github.io/NYCSubwayIcons
 //
-// LICENSE
+// Copyright (c) 2015 Suitey
+// License: The MIT License (MIT)
+// http://www.opensource.org/licenses/mit-license.php
 //
-// The MIT License (MIT)
-//
-// Copyright (c) 2014 Suitey
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy of
-// this software and associated documentation files (the "Software"), to deal in
-// the Software without restriction, including without limitation the rights to
-// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-// the Software, and to permit persons to whom the Software is furnished to do so,
-// subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-// FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-// COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-// IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-// CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// Authors: Chris DiLorenzo, Chris Sanders & Ethan Schmertzler
 
+
+// EXAMPLE
+// <element class="subway-icon subway-circle-1">
+//     <element class="subway-text">1</element>
+// </element>
+// I would suggest using spans for simplicity.
+
+
+// .subway-icon is only a suggestion since you will probably want a different size
+// depending on viewport. For example
+
+// .subway-icon
+//     height: 20px
+//     width: 20px
+// @media-query
+//     change to height/width 24px.
+
+// That way you don't need to reapply the mixin after media query, which keeps your CSS
+// way smaller. This is a good general rule to keep in mind, isolate the things that change
+// from the things that don't.
+
+// Obviously you can choose any naming conventions you want, the key is to have the colors
+// and the mixins
+
+
+// - - - COLORS - - -
 
 // Colors are from:
 // http://web.mta.info/developers/resources/line_colors.htm
@@ -38,49 +46,110 @@ $L: #A7A9AC
 $JZ: #996633
 $G: #6CBE45
 
-=circle($color, $fontSize: 16px, $diameter: 24px)
-    color: white
-    width: $diameter
-    font-weight: 400
-    height: $diameter
-    text-align: center
+
+// - - - MIXINS - - -
+
+=subway-circle($flexDisplay: inline-flex)
+
+    // This assumes you want to have your circles be inline if you would rather have 'block'
+    // behavour just make it a regular flex instead of inline.
+    display: -webkit-#{$flexDisplay}
+    display: $flexDisplay
+
     border-radius: 50%
-    font-size: $fontSize
+    -webkit-align-items: center
+    align-items: center
+    -webkit-justify-content: center
+    justify-content: center
+
+    // Just in case some parent is setting it to something else
+    line-height: 1em
+
+// The chromeFix basically depends on the circle to text-size ratio.
+// The non technical try it with 1em and then move down until it looks right for your
+// chosen size.
+=subway-text($color: white, $chromeFix: 0.7em)
     display: inline-block
-    line-height: $diameter + 1
-    background-color: $color
+    font-weight: 600
     font-family: Helvetica, sans-serif
+    color: $color
 
-[class='1'],
-[class='2'],
-[class='3']
-    +circle($_123)
+    // Chrome is worse for font handling. On chrome set the font containers height a bit to
+    // push the font down
+    @supports (-webkit-appearance:none)
+        height: $chromeFix
 
-[class='4'],
-[class='5'],
-[class='6']
-    +circle($_456)
 
-[class='7']
-    +circle($_7)
+// - - - CIRCLES LAYOUT & COLORS - - -
 
-.N, .Q, .R
-    +circle($NQR)
+// Isolating what is shared across circles from what is specific leads to way less
+// output CSS (and probably renders ever so slightly faster)
+.subway-circle-1,
+.subway-circle-2,
+.subway-circle-3,
+.subway-circle-4,
+.subway-circle-5,
+.subway-circle-6,
+.subway-circle-7,
+.subway-circle-N,
+.subway-circle-Q,
+.subway-circle-R,
+.subway-circle-B,
+.subway-circle-F,
+.subway-circle-D,
+.subway-circle-M,
+.subway-circle-S,
+.subway-circle-L,
+.subway-circle-J,
+.subway-circle-Z,
+.subway-circle-G,
+.subway-circle-A,
+.subway-circle-C,
+.subway-circle-E
+    +subway-circle()
 
-.B, .F, .D, .M
-    +circle($BDFM)
+.subway-circle-1,
+.subway-circle-2,
+.subway-circle-3
+    background-color: $_123
 
-.S
-    +circle($S)
+.subway-circle-4,
+.subway-circle-5,
+.subway-circle-6
+    background-color: $_456
 
-.L
-    +circle($L)
+.subway-circle-7
+    background-color: $_7
 
-.J, .Z
-    +circle($JZ)
+.subway-circle-N,
+.subway-circle-Q,
+.subway-circle-R
+    background-color: $NQR
 
-.G
-    +circle($G)
+    // NQR has black text
+    .subway-text
+        color: black
 
-.A, .C, .E
-    +circle($ACE)
+.subway-circle-B,
+.subway-circle-F,
+.subway-circle-D,
+.subway-circle-M
+    background-color: $BDFM
+
+.subway-circle-S
+    background-color: $S
+
+.subway-circle-L
+    background-color: $L
+
+.subway-circle-J,
+.subway-circle-Z
+    background-color: $JZ
+
+.subway-circle-G
+    background-color: $G
+
+.subway-circle-A,
+.subway-circle-C,
+.subway-circle-E
+    background-color: $ACE
