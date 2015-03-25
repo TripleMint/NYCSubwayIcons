@@ -27,7 +27,14 @@
   align-items: center;
   -webkit-justify-content: center;
   justify-content: center;
-  line-height: 1em; }
+  line-height: 1em;
+  padding: 3px;
+  color: white;
+  font-family: sans-serif;
+  width: 1em;
+  height: 1em;
+  margin:2px 0;
+}
 
 .subway-circle-1,
 .subway-circle-2,
