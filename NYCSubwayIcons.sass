@@ -13,15 +13,33 @@
 // </element>
 // I would suggest using spans for simplicity.
 
-
 // .subway-icon is only a suggestion since you will probably want a different size
-// depending on viewport. For example
+// depending on viewport. For example:
 
+// .subway-icon {
+//     // text size times 1.3 (2*1.3)
+//     height: 2.6em;
+//     width: 2.6em;
+// }
+// .subway-text {
+//     font-size: 2em;
+// }
+
+// if you are implementing this using SASS (.sass) you can just use the mixins
+// directly especially to get the right height/width comparative to the font
+// size. For example:
+
+// $size: 2em
 // .subway-icon
-//     height: 20px
-//     width: 20px
-// @media-query
-//     change to height/width 24px.
+//     +subway-circle-size($size)
+// .subway-text
+//     font-size: $size
+
+// If for some reason the 1.3 ratio doesnt look right to you you are obviously
+// free to augment the relation between these sizes as you see fit, this has
+// simply seemed to work well for us given our ems. In practice we have noticed
+// that smaller sizes the ratio seems to fall apart and we recommend setting
+// values for width, height and font-size that work manually.
 
 // That way you don't need to reapply the mixin after media query, which keeps your CSS
 // way smaller. This is a good general rule to keep in mind, isolate the things that change
@@ -37,48 +55,55 @@
 // http://web.mta.info/developers/resources/line_colors.htm
 $_123: #EE352E
 $_456: #00933C
-$ACE: #2850AD
-$NQR: #FCCC0A
+$ACE:  #2850AD
+$NQR:  #FCCC0A
 $BDFM: #FF6319
-$S: #808183
-$_7: #B933AD
-$L: #A7A9AC
-$JZ: #996633
-$G: #6CBE45
+$S:    #808183
+$_7:   #B933AD
+$L:    #A7A9AC
+$JZ:   #996633
+$G:    #6CBE45
 
 
 // - - - MIXINS - - -
 
 =subway-circle($flexDisplay: inline-flex)
 
-    // This assumes you want to have your circles be inline if you would rather have 'block'
-    // behavour just make it a regular flex instead of inline.
+    // This assumes you want to have your circles be inline if you would rather
+    // have 'block' behavour just make it a regular flex instead of inline.
     display: -webkit-#{$flexDisplay}
     display: $flexDisplay
 
+    // Make it round!
     border-radius: 50%
-    -webkit-align-items: center
-    align-items: center
-    -webkit-justify-content: center
-    justify-content: center
 
-    // Just in case some parent is setting it to something else
-    line-height: 1em
 
-// The chromeFix basically depends on the circle to text-size ratio.
-// The non technical try it with 1em and then move down until it looks right for your
-// chosen size.
-=subway-text($color: white, $chromeFix: 0.7em)
+=subway-text($color: white, $chromeFix: 0.08em)
+
+    // Auto centering magic for flexbox
+    margin: auto
+
+    // Make sure they didn't use a block element
     display: inline-block
+
+    // Font
     font-weight: 600
     font-family: Helvetica, sans-serif
     color: $color
 
-    // Chrome is worse for font handling. On chrome set the font containers height a bit to
-    // push the font down
+    // Chrome is worse for font handling. Chrome has uneven dead space on the
+    // top and bottom of a font and needs to be pushed down a bit due to this.
+    // We allow you to override the chromeFix but you really shouldn't it
+    // will scale with the font-size since it's in ems.
     @supports (-webkit-appearance:none)
-        height: $chromeFix
+        position: relative
+        top: $chromeFix
 
+=subway-circle-size($size: 2em)
+
+    // Where size is the font size.
+    width: 1.3 * $size
+    height: 1.3 * $size
 
 // - - - CIRCLES LAYOUT & COLORS - - -
 
